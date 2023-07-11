@@ -15,7 +15,19 @@ class Solution(object):
         for par in s:
             if par in LEFT:
                 stack.append(par)
-            elif len(stack) == 0 or PAIR[stack.pop()] != par:
-                return False
+            else:
+                if len(stack) == 0:
+                    return False
+                
+                left = stack.pop()
+                pair = PAIR[left]
 
-        return len(stack) == 0
+                if pair == par:
+                    continue
+                else:
+                    return False
+
+        if len(stack) > 0:
+            return False
+        else:
+            return True
