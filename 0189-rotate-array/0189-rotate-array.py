@@ -5,14 +5,13 @@ class Solution(object):
         :type k: int
         :rtype: None Do not return anything, modify nums in-place instead.
         """
-        front = []; behind = []; k = k % len(nums)
-
-        for _ in range(k):
-            front.append(nums.pop())
-        while nums:
-            behind.append(nums.pop())
-
-        while front:
-            nums.append(front.pop())
-        while behind:
-            nums.append(behind.pop())
+        save = []; k = k % len(nums)
+        if k == 0:
+            return nums
+        save[:len(nums) - k] = nums[:-k]
+        
+        for i in range(len(nums)):
+            if i < k:
+                nums[i] = nums[len(nums) - k + i]
+            else:
+                nums[i] = save[i - k]
