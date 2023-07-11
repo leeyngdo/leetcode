@@ -10,39 +10,17 @@ class Solution(object):
         :type list2: Optional[ListNode]
         :rtype: Optional[ListNode]
         """
-        head = ListNode(None); cur = None
 
-        while True:
-            if list1 is None and list2 is None:
-                return head.next
-            elif list1 is None:
-                if head.next is None:
-                    head.next = list2
-                else:
-                    cur.next = list2
-                return head.next
-            elif list2 is None:
-                if head.next is None:
-                    head.next = list1
-                else:
-                    cur.next = list1
-                return head.next
+        if list1 is None and list2 is None:
+            return None
+        elif list1 is None:
+            return list2
+        elif list2 is None:
+            return list1
+        else:
+            if list1.val <= list2.val:
+                list1.next = self.mergeTwoLists(list1.next, list2)
+                return list1
             else:
-                if list1.val <= list2.val:
-                    if head.next is None: # initial
-                        head.next = list1
-                        cur = list1
-                    else:
-                        cur.next = list1
-                        cur = cur.next
-                    list1 = list1.next
-                else:
-                    if head.next is None: # initial
-                        head.next = list2
-                        cur = list2
-                    else:
-                        cur.next = list2
-                        cur = cur.next
-                    list2 = list2.next
-    
-        return head.next
+                list2.next = self.mergeTwoLists(list1, list2.next)
+                return list2
