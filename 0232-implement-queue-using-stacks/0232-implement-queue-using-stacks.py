@@ -15,10 +15,6 @@ class MyQueue(object):
         # Queue size update
         self.size += 1
 
-        # Top value update
-        self.top = self.queue[-1] if self.queue else self.ready[0]
-        
-
     def pop(self):
         """
         :rtype: int
@@ -35,20 +31,18 @@ class MyQueue(object):
         # Queue size update
         self.size -= 1
 
-        # Top value update
-        if self.size == 0:
-            self.top = None
-        elif self.queue:
-            self.top = self.queue[-1]
-        else:
-            self.top = self.ready[0]
-
         return item
 
     def peek(self):
         """
         :rtype: int
         """
+        if self.size == 0:
+            self.top = None
+        elif self.queue:
+            self.top = self.queue[-1]
+        else:
+            self.top = self.ready[0]
         return self.top
 
     def empty(self):
