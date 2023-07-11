@@ -4,18 +4,10 @@ class Solution(object):
         :type s: str
         :rtype: int
         """
-        right = len(s) - 1; left = right - 1; ans = 0
-        
-        while ans == 0 and left >= 0:
-            if s[right].isalnum() and s[left].isalnum():
-                pass
-            else:
-                if s[right].isalnum():
-                    ans = right - left
-                right = left
-            
-            left -= 1
-        
-        if s[right].isalnum():
-            ans = right + 1
-        return ans
+        i, ans = len(s) - 1, 0
+        while s[i] == " ":
+            i -= 1
+        while i >= 0 and s[i] != " ":
+            ans += 1
+            i -= 1
+        return ans  
