@@ -1,3 +1,5 @@
+from collections import deque
+
 # Definition for a binary tree node.
 # class TreeNode(object):
 #     def __init__(self, val=0, left=None, right=None):
@@ -10,10 +12,14 @@ class Solution(object):
         :type root: TreeNode
         :rtype: TreeNode
         """
-        # None
-        if root is None:
-            return None
-        else:
-            # Invert
-            root.left, root.right = self.invertTree(root.right), self.invertTree(root.left)
-            return root
+        if not root: return None
+        
+        q = deque(); q.append(root)
+        while q:
+            node = q.popleft()
+            node.left, node.right = node.right, node.left
+
+            if node.left: q.append(node.left)
+            if node.right: q.append(node.right)
+            
+        return root
