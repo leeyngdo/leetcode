@@ -9,25 +9,16 @@ class Solution(object):
         :type color: int
         :rtype: List[List[int]]
         """
-        target = image[sr][sc]
-        if target == color: return image
+        if image[sr][sc] == color: return image
 
-        m = len(image); n = len(image[0])
-        stack = deque(); stack.append((sr, sc)); image[sr][sc] = color
-        while stack:
-            h, w = stack.pop()
-            if h > 0 and image[h-1][w] == target:
-                image[h-1][w] = color
-                stack.append((h-1, w))
-            if h < m - 1 and image[h+1][w] == target:
-                image[h+1][w] = color
-                stack.append((h+1, w))
-            if w > 0 and image[h][w-1] == target:
-                image[h][w-1] = color
-                stack.append((h, w-1))
-            if w < n - 1 and image[h][w+1] == target:
-                image[h][w+1] = color
-                stack.append((h, w+1))
-
+        m = len(image); n = len(image[0]); target = image[sr][sc]
+        def fill(h, w):
+            if image[h][w] == target:
+                image[h][w] = color
+                if h > 0: fill(h-1, w)
+                if h < m - 1: fill(h+1, w)
+                if w > 0: fill(h, w-1)
+                if w < n - 1: fill(h, w+1)
+        
+        fill(sr, sc)
         return image
-            
