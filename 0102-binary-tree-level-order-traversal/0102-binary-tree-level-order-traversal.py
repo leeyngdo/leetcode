@@ -13,17 +13,14 @@ class Solution(object):
         """
         if not root: return []
 
-        output = [[root.val]]; 
-        queue = deque(); queue.append((root, 0))
+        output = []; 
+        queue = deque(); queue.append(root)
         while queue:
-            node, lv = queue.popleft()
-            if node.left:
-                queue.append((node.left, lv + 1))
-                if lv + 1 > len(output) - 1: output.append([])
-                output[lv + 1].append(node.left.val)
-            if node.right:
-                queue.append((node.right, lv + 1))
-                if lv + 1 > len(output) - 1: output.append([])
-                output[lv + 1].append(node.right.val)
-
+            level = []
+            for _ in range(len(queue)):
+                node = queue.popleft()
+                if not node: continue
+                level.append(node.val)
+                queue.append(node.left); queue.append(node.right)
+            if level: output.append(level)
         return output
